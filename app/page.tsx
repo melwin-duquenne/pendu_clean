@@ -6,14 +6,13 @@ import { GetInitialPlayer } from '../app/use_cases/GetInitialPlayer';
 import { StartGameForLevel } from '../app/use_cases/StartGameForLevel';
 import { Game } from '../domain/entities/Game';
 import { Player } from '../domain/entities/Player';
-import { GetGameState } from '../app/use_cases/GetGameState';
 
 export default function HomePage() {
   const [username, setUsername] = useState('');
   const [player, setPlayer] = useState<Player | null>(null);
   const [game, setGame] = useState<Game | null>(null);
   const [loading, setLoading] = useState(false);
-  const [letter, setLetter] = useState('');
+  const [guessInput, setGuessInput] = useState('');
   const [error, setError] = useState('');
   const [leaderboard, setLeaderboard] = useState<{ username: string; score: number; level: number }[]>([]);
 
@@ -33,15 +32,12 @@ export default function HomePage() {
 
   const handleGuess = async () => {
     setError('');
-    if (!letter || letter.length !== 1) {
-      setError('Veuillez entrer une seule lettre.');
-      return;
-    }
+    if (!guessInput || !game) return;
     try {
-  const { GuessLetterForGame } = await import('../app/use_cases/GuessLetterForGame');
-  const updatedGame = GuessLetterForGame.execute(game, letter.toLowerCase());
-  setGame(updatedGame);
-      setLetter('');
+      const { CheckLetter } = await import('../app/use_cases/CheckLetter');
+      const updatedGame = CheckLetter.execute(game, guessInput);
+      setGame({ ...updatedGame });
+      setGuessInput('');
       // Gestion du score et du niveau si gagné
       if (updatedGame.status === 'won') {
         const { UpdateScoreIfWin } = await import('../app/use_cases/UpdateScoreIfWin');
@@ -51,15 +47,12 @@ export default function HomePage() {
         const { IncrementConsecutiveWins } = await import('../app/use_cases/IncrementConsecutiveWins');
         let updatedPlayer = UpdateScoreIfWin.execute(player!, updatedGame);
         updatedPlayer = IncrementConsecutiveWins.execute(updatedPlayer);
-        // Si 5 victoires consécutives, level up et mot plus long
         if (ShouldLevelUp.execute(updatedPlayer)) {
           updatedPlayer = LevelUp.execute(updatedPlayer);
           updatedPlayer.consecutiveWins = 0;
         }
-        // Nouveau mot à chaque victoire
         const newWord = await GetWordForLevel.execute(updatedPlayer.level);
         const newGame = new Game(updatedPlayer, newWord);
-        // Dévoile la première lettre du nouveau mot
         if (newGame.word && newGame.word.name && newGame.word.name.length > 0) {
           const firstLetter = newGame.word.name[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace('œ', 'oe');
           newGame.guessedLetters.push(firstLetter);
@@ -70,14 +63,17 @@ export default function HomePage() {
       // Sauvegarde du score si perdu
       if (updatedGame.status === 'lost') {
         const { ScoreController } = await import('../adapters/infrastructure/ScoreController');
-        ScoreController.save(player);
+        if (player) {
+          ScoreController.save(player);
+        }
         const { GetLeaderboardState } = await import('../app/use_cases/GetLeaderboardState');
-        setLeaderboard(GetLeaderboardState.execute(10));
+        const leaderboardData = GetLeaderboardState.execute(10);
+        setLeaderboard(Array.isArray(leaderboardData) ? leaderboardData.filter((p: any): p is { username: string; score: number; level: number } => p.username && typeof p.score === 'number' && typeof p.level === 'number') : []);
       }
-    } catch (e) {
+    } catch {
       setError('Erreur lors de la vérification.');
     }
-  } 
+  }
 
   return (
     <main style={{ padding: 32 }}>
@@ -110,13 +106,12 @@ export default function HomePage() {
                 <div style={{ marginTop: 16 }}>
                   <input
                     type="text"
-                    maxLength={1}
-                    placeholder="Proposez une lettre"
-                    value={letter}
-                    onChange={e => setLetter(e.target.value)}
+                    placeholder="Proposez une lettre ou un mot"
+                    value={guessInput}
+                    onChange={e => setGuessInput(e.target.value)}
                     style={{ marginRight: 8 }}
                   />
-                  <button onClick={handleGuess} disabled={!letter}>
+                  <button onClick={handleGuess} disabled={!guessInput}>
                     Proposer
                   </button>
                   {error && <p style={{ color: 'red' }}>{error}</p>}
