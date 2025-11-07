@@ -1,0 +1,14 @@
+[
+  {
+    "username": "mel",
+    "score": 0,
+    "level": 1,
+    "consecutiveWins": 0
+  },
+  {
+    "username": "mal",
+    "score": 0,
+    "level": 1,
+    "consecutiveWins": 0
+  }
+]

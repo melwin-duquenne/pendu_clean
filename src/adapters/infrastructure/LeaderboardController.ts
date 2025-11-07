@@ -1,11 +1,11 @@
 import { GetLeaderboard } from "@/src/app/use_cases/GetLeaderboard";
 import { Player } from "@/src/domain/entities/Player";
-import { ScoreStorage } from "@/src/frameworks/drivers/ScoreStorage";
+import { frameworks } from '@/src/domain/entities/ControllerService';
 
 
 export class LeaderboardController {
-  static getLeaderboard(top: number = 10): Player[] {
-    const scores = ScoreStorage.load();
+  async getLeaderboard(top: number = 10): Promise<Player[]> {
+    const scores = await frameworks.scoreStorage.load();
     return GetLeaderboard.execute(scores, top);
   }
 }

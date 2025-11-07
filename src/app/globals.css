@@ -1,3 +1,190 @@
+body {
+  background: #181818;
+  color: #fff;
+  font-family: 'Press Start 2P', 'Consolas', 'monospace';
+}
+
+.arcade-block {
+  background: #111;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 16px #000, 0 0 8px #ff00c8 inset;
+  padding: 2rem 2.5rem;
+  color: #fff;
+  font-family: 'Press Start 2P', 'Consolas', 'monospace';
+  margin-bottom: 2rem;
+}
+
+.arcade-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #00fff9;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 8px #00fff9, 0 0 2px #fff;
+}
+
+.arcade-input {
+  background: #222;
+  color: #fff;
+  border: 2px solid #00fff9;
+  border-radius: 0.3rem;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  font-family: inherit;
+  margin-bottom: 1rem;
+  outline: none;
+  box-shadow: 0 0 8px #00fff9 inset;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.arcade-input:focus {
+  border: 2px solid #ff00c8;
+  box-shadow: 0 0 12px #ff00c8 inset;
+}
+
+.arcade-btn {
+  background: linear-gradient(90deg, #ff00c8 0%, #00fff9 100%);
+  color: #fff;
+  border: none;
+  border-radius: 0.3rem;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.7rem 2.2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 8px #00fff9, 0 0 8px #ff00c8 inset;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.arcade-btn:hover {
+  background: linear-gradient(90deg, #00fff9 0%, #ff00c8 100%);
+  box-shadow: 0 0 16px #ff00c8, 0 0 8px #00fff9 inset;
+}
+
+.arcade-label {
+  color: #ffeb3b;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  text-shadow: 0 0 4px #ffeb3b;
+}
+
+.arcade-section-title {
+  color: #ff00c8;
+  font-size: 1.2rem;
+  margin: 1.5rem 0 0.7rem 0;
+  text-align: center;
+  text-shadow: 0 0 6px #ff00c8;
+}
+.scoreboard-arcade {
+  margin-top: 2rem;
+  background: #111;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 16px #000, 0 0 8px #ff00c8 inset;
+  padding: 1.5rem 2rem;
+  color: #fff;
+  font-family: 'Press Start 2P', 'Consolas', 'monospace';
+  max-width: 480px;
+  width: 100%;
+}
+
+.scoreboard-arcade h3 {
+  text-align: center;
+  font-size: 1.3rem;
+  color: #00fff9;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 8px #00fff9, 0 0 2px #fff;
+}
+
+.scoreboard-arcade ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.scoreboard-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px dashed #444;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  transition: background 0.2s;
+}
+.scoreboard-row:last-child {
+  border-bottom: none;
+}
+.scoreboard-row:hover {
+  background: #222;
+}
+.scoreboard-rank {
+  color: #ff00c8;
+  font-weight: bold;
+  margin-right: 1rem;
+  min-width: 2.2em;
+  text-align: right;
+  text-shadow: 0 0 4px #ff00c8;
+}
+.scoreboard-name {
+  color: #fff;
+  flex: 1;
+  margin-right: 1rem;
+  text-shadow: 0 0 2px #fff;
+}
+.scoreboard-score {
+  color: #00fff9;
+  font-weight: bold;
+  margin-right: 1rem;
+  text-shadow: 0 0 4px #00fff9;
+}
+.scoreboard-level {
+  color: #ffeb3b;
+  font-weight: bold;
+  text-shadow: 0 0 4px #ffeb3b;
+}
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 0 red, -2px 0 blue;
+    color: #fff;
+  }
+  20% {
+    text-shadow: -2px 0 red, 2px 0 blue;
+    color: #ff2222;
+  }
+  40% {
+    text-shadow: 2px 2px #00fff9, -2px -2px #ff00c8;
+    color: #fff;
+  }
+  60% {
+    text-shadow: -2px -2px #00fff9, 2px 2px #ff00c8;
+    color: #fff;
+  }
+  80% {
+    text-shadow: 2px 0 red, -2px 0 blue;
+    color: #ff2222;
+  }
+  100% {
+    text-shadow: 0 0 #fff, 0 0 #fff;
+    color: #fff;
+  }
+}
+
+.game-over-glitch {
+  font-family: 'Press Start 2P', 'Consolas', 'monospace';
+  font-size: 3rem;
+  color: #fff;
+  background: #000;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  letter-spacing: 0.2em;
+  animation: glitch 1s infinite steps(2, end);
+  text-shadow: 2px 0 red, -2px 0 blue;
+  box-shadow: 0 0 16px #000;
+}
 @import "tailwindcss";
 
 

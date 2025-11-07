@@ -1,9 +1,10 @@
-import { GamePresenter } from "@/src/adapters/infrastructure/GamePresenter";
+
+import { resources } from "@/src/domain/entities/ControllerService";
 import { Game } from "@/src/domain/entities/Game";
 
 
 export class GetGameState {
   static execute(game: Game): object {
-    return GamePresenter.present(game);
+    return resources.gamePresenter.present(game);
   }
 }

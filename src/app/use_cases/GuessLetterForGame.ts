@@ -1,9 +1,9 @@
 
 import { Game } from '@/src/domain/entities/Game';
-import { GameController } from '@/src/adapters/infrastructure/GameController';
+import { resources } from '@/src/domain/entities/ControllerService';
 
 export class GuessLetterForGame {
   static execute(game: Game, letter: string): Game {
-    return GameController.guessLetter(game, letter);
+  return resources.gameController.guessLetter(game, letter);
   }
 }

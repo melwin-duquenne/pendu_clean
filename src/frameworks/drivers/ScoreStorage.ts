@@ -1,14 +1,17 @@
 import { Player } from "@/src/domain/entities/Player";
 
 export class ScoreStorage {
-  private static key = 'pendu_scores';
-
-  static save(scores: Player[]): void {
-    localStorage.setItem(this.key, JSON.stringify(scores));
+  async save(scores: Player[]): Promise<void> {
+    await fetch('/api/scores', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(scores),
+    });
   }
 
-  static load(): Player[] {
-    const data = localStorage.getItem(this.key);
-    return data ? JSON.parse(data) : [];
+  async load(): Promise<Player[]> {
+    const res = await fetch('/api/scores');
+    if (!res.ok) return [];
+    return await res.json();
   }
 }
