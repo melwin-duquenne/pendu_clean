@@ -1,6 +1,12 @@
 [
   {
     "username": "mel",
+    "score": 40,
+    "level": 2,
+    "consecutiveWins": 2
+  },
+  {
+    "username": "mel",
     "score": 0,
     "level": 1,
     "consecutiveWins": 0

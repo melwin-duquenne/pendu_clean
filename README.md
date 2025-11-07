@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pendu Clean Architecture
 
-## Getting Started
+Un jeu du pendu moderne, robuste et maintenable, développé en TypeScript avec Next.js et une Clean Architecture.
 
-First, run the development server:
+## Fonctionnalités principales
+- Jeu du pendu avec niveaux, catégories, et gestion des scores
+- UI rétro/arcade avec CSS custom
+- Persistance des scores via API Next.js
+- Architecture découplée (domain, use_cases, adapters, frameworks)
+- Tests unitaires et fonctionnels sur tous les adapters, use_cases, entities et drivers
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Structure du projet
+```
+├── src/
+│   ├── app/
+│   │   └── use_cases/         # Cas d'usage métier (testés)
+│   ├── domain/
+│   │   └── entities/          # Entités métier (testées)
+│   ├── adapters/
+│   │   └── infrastructure/    # Contrôleurs, gateways, presenters (testés)
+│   ├── frameworks/
+│   │   └── drivers/           # Accès API, stockage, etc. (testés)
+│   └── pages/api/             # API Next.js pour la persistance
+├── public/                    # Assets statiques
+├── app/                       # UI Next.js (rétro/arcade)
+├── package.json
+├── jest.config.js             # Config tests (ts-jest, jsdom)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation & Lancement
+```sh
+npm install
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Lancer les tests
+```sh
+npx jest
+```
+Tous les adapters, use_cases, entities et drivers sont couverts par des tests fonctionnels/unitaires.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Principes d'architecture
+- **Domain** : Entités et logique métier pure, sans dépendance extérieure
+- **Use Cases** : Orchestration métier, application des règles du jeu
+- **Adapters** : Interface entre le domaine et l'extérieur (UI, API, stockage)
+- **Frameworks/Drivers** : Accès aux technos concrètes (API, fetch, etc.)
+- **Dépendances** : Injection via `ControllerService` et `resources`
 
-## Learn More
+## UI & Expérience
+- Interface Next.js/React, style rétro/arcade
+- Expérience fluide, responsive, et accessible
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Auteur
+Projet réalisé par melwin-duquenne
