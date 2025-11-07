@@ -1,11 +1,11 @@
-import { WordApiGateway } from './adapters/infrastructure/WordApiGateway';
-import { StartGame } from './app/use_cases/StartGame';
-import { CheckLetter } from './app/use_cases/CheckLetter';
-import { LevelUp } from './app/use_cases/LevelUp';
-import { SaveScore } from './app/use_cases/SaveScore';
-import { GetLeaderboard } from './app/use_cases/GetLeaderboard';
-import { ScoreStorage } from './frameworks/drivers/ScoreStorage';
-import { Player } from './domain/entities/Player';
+import { WordApiGateway } from './src/infrastructure/WordApiGateway';
+import { StartGame } from './src/use_cases/StartGame';
+import { CheckLetter } from './src/use_cases/CheckLetter';
+import { LevelUp } from './src/use_cases/LevelUp';
+import { SaveScore } from './src/use_cases/SaveScore';
+import { GetLeaderboard } from './src/use_cases/GetLeaderboard';
+import { ScoreStorage } from './src/frameworks/drivers/ScoreStorage';
+import { Player } from './src/domain/entities/Player';
 
 // Exemple d'assemblage des dépendances et d'utilisation
 async function main() {
