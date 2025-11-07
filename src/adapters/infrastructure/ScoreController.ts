@@ -1,6 +1,6 @@
-import { SaveScore } from "@/src/app/use_cases/SaveScore";
 import { Player } from "@/src/domain/entities/Player";
 import { frameworks } from '@/src/domain/entities/ControllerService';
+import { SaveScore } from "@/src/app/use_cases/SaveScore";
 
 export class ScoreController {
   async save(player: Player): Promise<void> {
